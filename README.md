@@ -142,20 +142,20 @@ This project demonstrates experience in:
 
 ### Product Search
 
-*(Add screenshot here)*
-
+![Product Search](assets/images/Product-Locator.png)
 ---
 
 ### Price Comparison
-
-*(Add screenshot here)*
-
+![Comparison](assets/images/ML%20model.png)
 ---
 
-### Google Maps Integration
+### Recomnmended Stores
 
-*(Add screenshot here)*
+![Recommended Stores](assets/images/Recommended%20Stores.png)
 
+### Smart Picks
+
+![Smart Picks](assets/images/SmartPicks.png)
 ---
 
 ## 🚀 Future Improvements (WasGud 2.0)
