@@ -147,35 +147,25 @@ This project demonstrates experience in:
 
 ### 🔍 Product Search
 
-Search for grocery products across multiple supermarkets.
-
-![Product Search](assets/assets/images/Product-Locator.png)
+![Product Search](https://raw.githubusercontent.com/ftthfrds2905/WasgudMVP/main/assets/assets/images/Product-Locator.png)
 
 ---
 
 ### 💰 Price Comparison
 
-Compare prices between retailers to find the best available deal.
-
-![Price Comparison](assets/assets/images/ml-model.png)
+![Price Comparison](https://raw.githubusercontent.com/ftthfrds2905/WasgudMVP/main/assets/assets/images/ml-model.png)
 
 ---
 
 ### 📍 Recommended Stores
 
-Discover nearby supermarkets offering your selected product.
-
-![Recommended Stores](assets/assets/images/recommended-stores.png)
+![Recommended Stores](https://raw.githubusercontent.com/ftthfrds2905/WasgudMVP/main/assets/assets/images/recommended-stores.png)
 
 ---
 
 ### ⭐ Smart Picks
 
-Receive product recommendations based on price and value.
-
-![Smart Picks](assets/assets/images/SmartPicks.png)
-
----
+![Smart Picks](https://raw.githubusercontent.com/ftthfrds2905/WasgudMVP/main/assets/assets/images/SmartPicks.png)
 
 ## 🚀 Future Improvements (WasGud 2.0)
 
