@@ -201,4 +201,3 @@ GitHub: https://github.com/fattah2905
 
 This project is intended for educational and portfolio purposes.
 
-```
