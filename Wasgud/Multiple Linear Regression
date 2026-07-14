@@ -1,0 +1,176 @@
+import re
+import numpy as np
+import pandas as pd
+
+from sklearn.model_selection import train_test_split
+from sklearn.compose import ColumnTransformer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.decomposition import TruncatedSVD
+from sklearn.ensemble import RandomForestRegressor
+
+import torch
+import torch.nn as nn
+from torch.utils.data import Dataset, DataLoader
+
+# ----------------------------
+# 1) Load & combine sheets
+# ----------------------------
+path = "/content/drive/MyDrive/Capstoned/5000_DataPoints.csv"  # update path if needed
+# The original code attempted to read a .csv file as an Excel file.
+# xls = pd.ExcelFile(path)
+# rows = []
+# for sh in xls.sheet_names:
+#     df = pd.read_excel(path, sheet_name=sh)[["Product Name", "Price"]].copy()
+#     df["Store"] = sh
+#     rows.append(df)
+# data = pd.concat(rows, ignore_index=True)
+
+# Correctly read the CSV file directly.
+# Assuming the CSV contains 'Product Name', 'Price', and 'Store' columns.
+data = pd.read_csv(path)
+data = data[["Product Name", "Price", "Store"]].copy() # Select relevant columns
+
+data["Price"] = pd.to_numeric(data["Price"], errors="coerce")
+data = data.dropna(subset=["Product Name", "Price", "Store"]).reset_index(drop=True)
+
+X = data[["Product Name", "Store"]]
+y = data["Price"].values
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=X["Store"]
+)
+
+def report(name, y_true, y_pred):
+    mae = mean_absolute_error(y_true, y_pred)
+    # Removed 'squared=False' as it might not be supported in older sklearn versions
+    # and manually compute sqrt to get RMSE.
+    rmse = np.sqrt(mean_squared_error(y_true, y_pred))
+    r2 = r2_score(y_true, y_pred)
+    print(f"{name:>30} | MAE={mae:.3f}  RMSE={rmse:.3f}  R2={r2:.3f}")
+
+# ----------------------------
+# 2) Multiple Linear Regression
+# ----------------------------
+mlr = Pipeline([
+    ("pre", ColumnTransformer([
+        ("txt", TfidfVectorizer(ngram_range=(1,2), min_df=1), "Product Name"),
+        ("store", OneHotEncoder(handle_unknown="ignore"), ["Store"])
+    ])),
+    ("model", LinearRegression())
+])
+mlr.fit(X_train, y_train)
+pred_mlr = mlr.predict(X_test)
+report("Multiple Linear Regression", y_test, pred_mlr)
+
+# ----------------------------
+# 3) Random Forest (TFIDF -> SVD)
+# ----------------------------
+text_pipe = Pipeline([
+    ("tfidf", TfidfVectorizer(ngram_range=(1,2), min_df=1)),
+    ("svd", TruncatedSVD(n_components=80, random_state=42))
+])
+
+rf = Pipeline([
+    ("pre", ColumnTransformer([
+        ("text", text_pipe, "Product Name"),
+        ("store", OneHotEncoder(handle_unknown="ignore"), ["Store"])
+    ], sparse_threshold=0.0)),
+    ("model", RandomForestRegressor(
+        n_estimators=500, random_state=42, n_jobs=-1
+    ))
+])
+
+rf.fit(X_train, y_train)
+pred_rf = rf.predict(X_test)
+report("Random Forest", y_test, pred_rf)
+
+# ----------------------------
+# 4) LSTM (PyTorch) on Product Name tokens + Store embedding
+# ----------------------------
+def tokenize(text):
+    return re.findall(r"[A-Za-z0-9]+", str(text).lower())
+
+train_tokens = [tokenize(t) for t in X_train["Product Name"].tolist()]
+vocab = {"<pad>": 0, "<unk>": 1}
+for toks in train_tokens:
+    for tok in toks:
+        if tok not in vocab:
+            vocab[tok] = len(vocab)
+
+store_list = sorted(data["Store"].unique())
+store2idx = {s:i for i,s in enumerate(store_list)}
+
+max_len = 20
+def encode(tokens):
+    ids = [vocab.get(tok, 1) for tok in tokens][:max_len]
+    ids += [0] * (max_len - len(ids))
+    return ids
+
+def build_encoded(Xdf):
+    seqs = np.stack([encode(tokenize(t)) for t in Xdf["Product Name"].tolist()]).astype(np.int64)
+    stores = np.array([store2idx[s] for s in Xdf["Store"].tolist()], dtype=np.int64)
+    return seqs, stores
+
+train_seqs, train_stores = build_encoded(X_train)
+test_seqs, test_stores = build_encoded(X_test)
+
+class EncodedDS(Dataset):
+    def __init__(self, seqs, stores, y):
+        self.seqs = torch.tensor(seqs, dtype=torch.long)
+        self.stores = torch.tensor(stores, dtype=torch.long)
+        self.y = torch.tensor(y.astype(np.float32), dtype=torch.float32)
+    def __len__(self): return len(self.y)
+    def __getitem__(self, idx):
+        return self.seqs[idx], self.stores[idx], self.y[idx]
+
+train_loader = DataLoader(EncodedDS(train_seqs, train_stores, y_train), batch_size=64, shuffle=True)
+test_loader  = DataLoader(EncodedDS(test_seqs,  test_stores,  y_test),  batch_size=64, shuffle=False)
+
+class LSTMRegressor(nn.Module):
+    def __init__(self, vocab_size, store_count, emb_dim=16, store_emb_dim=4, hidden=16):
+        super().__init__()
+        self.emb = nn.Embedding(vocab_size, emb_dim, padding_idx=0)
+        self.lstm = nn.LSTM(emb_dim, hidden, batch_first=True)
+        self.store_emb = nn.Embedding(store_count, store_emb_dim)
+        self.fc = nn.Sequential(
+            nn.Linear(hidden + store_emb_dim, 32),
+            nn.ReLU(),
+            nn.Linear(32, 1)
+        )
+    def forward(self, x, store):
+        e = self.emb(x)
+        _, (h, _) = self.lstm(e)
+        h = h[-1]
+        s = self.store_emb(store)
+        return self.fc(torch.cat([h, s], dim=1)).squeeze(1)
+
+torch.manual_seed(42)
+torch.set_num_threads(1)
+
+model = LSTMRegressor(vocab_size=len(vocab), store_count=len(store_list))
+opt = torch.optim.Adam(model.parameters(), lr=3e-3)
+loss_fn = nn.MSELoss()
+
+# Train (increase epochs if you want better accuracy, e.g. 30–80)
+for epoch in range(30):
+    model.train()
+    for x, s, yb in train_loader:
+        opt.zero_grad()
+        pred = model(x, s)
+        loss = loss_fn(pred, yb)
+        loss.backward()
+        opt.step()
+
+# Evaluate
+model.eval()
+preds = []
+with torch.no_grad():
+    for x, s, yb in test_loader:
+        preds.append(model(x, s).numpy())
+pred_lstm = np.concatenate(preds)
+report("LSTM (ProductName+Store)", y_test, pred_lstm)
+
