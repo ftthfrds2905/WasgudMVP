@@ -138,34 +138,23 @@ This project demonstrates experience in:
 
 ---
 
-## 📸 Screenshots
-
-### Product Search
----
-
-## 📸 Screenshots
+## 📸 Screenshots#
 
 ### 🔍 Product Search
 
-![Product Search](https://raw.githubusercontent.com/ftthfrds2905/WasgudMVP/main/assets/assets/images/Product-Locator.png)
-
----
+![Product Search](Wasgud/assets/assets/images/Product-Locator.png)
 
 ### 💰 Price Comparison
 
-![Price Comparison](https://raw.githubusercontent.com/ftthfrds2905/WasgudMVP/main/assets/assets/images/ml-model.png)
-
----
+![Price Comparison](Wasgud/assets/assets/images/ml-model.png)
 
 ### 📍 Recommended Stores
 
-![Recommended Stores](https://raw.githubusercontent.com/ftthfrds2905/WasgudMVP/main/assets/assets/images/recommended-stores.png)
-
----
+![Recommended Stores](Wasgud/assets/assets/images/recommended-stores.png)
 
 ### ⭐ Smart Picks
 
-![Smart Picks](https://raw.githubusercontent.com/ftthfrds2905/WasgudMVP/main/assets/assets/images/SmartPicks.png)
+![Smart Picks](Wasgud/assets/assets/images/SmartPicks.png)
 
 ## 🚀 Future Improvements (WasGud 2.0)
 
