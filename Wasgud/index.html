@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Wasgud Shop eCommerce HTML CSS Template</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/templatemo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+</head>
+
+<body>
+    <!-- Start Top Nav -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+        <div class="container text-light">
+            <div class="w-100 d-flex justify-content-between">
+                <div>
+                    <i class="fa fa-envelope mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">wasgud@company.com</a>
+                    <i class="fa fa-phone mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                </div>
+                <div>
+                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Close Top Nav -->
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+                Wasgud
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <div class="wasgud-tagline-wrap mx-lg-auto text-center">
+  <div class="wasgud-tagline-main">Your AI shopping companion.</div>
+  <div class="wasgud-tagline-sub">Spend smarter, spend less.</div>
+</div>
+
+                </div>
+
+                <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Removed modal trigger search icon to avoid confusion -->
+                    <!--
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    -->
+
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                    </a>
+
+                    <!-- ADDED: Client Manager link to CRUD page (does not remove anything else) -->
+                    <a class="btn btn-success btn-sm ms-2" href="crud.html" aria-label="Add or edit items (Client Item Manager)">
+                        Add/Edit Item
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+
+
+    <!-- (Optional) Keep your modal in the file but you can delete it later.
+         It's not used now because we moved search to the map. -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content border-0">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title">Search Products</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-2">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Search product name..." autocomplete="off">
+                        <button type="button" class="btn btn-success">
+                            <i class="fa fa-search text-white"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   <!-- ===== WASGUD Scroll-Snap Hero ===== -->
+<div class="container my-4">
+   <section class="wasgud-scroll-hero">
+  <div class="wasgud-snap" id="wasgudSnapHero" aria-label="Wasgud hero slides">
+    <div class="wasgud-snap-slide">
+      <img src="assets/img/hero/hero-wasgud.png"  alt="Problem Statement slide">
+    </div>
+
+    <div class="wasgud-snap-slide">
+      <img src="assets/img/hero/hero-scenario.png" alt="Business Scenario slide">
+    </div>
+
+    <div class="wasgud-snap-slide">
+      <img src="assets/img/hero/hero-problem.png" alt="Target Market slide">
+    </div>
+
+    <div class="wasgud-snap-slide">
+      <img src="assets/img/hero/hero-target.png" alt="Wasgud Presentation slide">
+    </div>
+  </div>
+  </div>
+
+ 
+
+  <!-- Optional dot indicator (CSS only, no JS) -->
+  <div class="wasgud-scroll-dots" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+  </div>
+</section>
+
+
+    <!-- Start Store Locator Section -->
+    <section class="bg-light py-5">
+        <div class="container">
+
+            <div class="row text-center mb-4">
+                <div class="col-lg-8 m-auto">
+                    <h1 class="h1">Stores Near You</h1>
+                    <p class="text-muted">Search products near your current location</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 position-relative">
+
+                    <!-- Search overlay ON TOP of map -->
+                    <div class="wasgud-map-search shadow">
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="inputModalSearch"
+                                placeholder="Search product name (e.g. milk, rice, bread)"
+                                autocomplete="off"
+                            >
+                            <button
+                                type="button"
+                                id="btnModalSearch"
+                                class="btn btn-success"
+                            >
+                                <i class="fa fa-search text-white"></i>
+                            </button>
+                        </div>
+                        <div id="searchStatus" class="small text-muted mt-1"></div>
+                    </div>
+
+                    <!-- Map -->
+                    <div
+                        id="map"
+                        class="shadow"
+                        style="width: 100%; height: 420px; border-radius: 12px;"
+                    ></div>
+
+                    <p id="mapStatus" class="small text-muted mt-2 text-center"></p>
+                </div>
+            </div>
+
+            <!-- Results below map -->
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="table-responsive shadow-sm bg-white rounded" style="max-height: 360px; overflow-y: auto;">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Store</th>
+                                    <th class="text-end">Price</th>
+                                    <th>Category</th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchResultsBody">
+                                <tr>
+                                    <td colspan="4" class="text-muted text-center">
+                                        Start typing to search products
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- End Store Locator Section -->
+
+
+  <!-- Start Smart Picks Near You -->
+<section class="bg-light">
+  <div class="container py-5">
+    <div class="row text-center py-3">
+      <div class="col-lg-7 m-auto">
+        <h1 class="h1">Smart Picks Near You</h1>
+        <p class="text-muted mb-0">
+          Optimised using availability → distance → price
+        </p>
+      </div>
+    </div>
+
+    <!-- Cards injected by custom.js -->
+    <div class="row" id="smartPicksRow">
+      <div class="col-12 text-center text-muted">
+        Loading recommendations...
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Smart Picks Near You -->
+
+
+
+  <!-- Start Footer -->
+<footer class="bg-dark" id="tempaltemo_footer">
+  <div class="container">
+    <div class="row">
+
+      <!-- Brand -->
+      <div class="col-md-5 pt-5">
+        <h2 class="h2 text-success border-bottom pb-3 border-light logo">Wasgud</h2>
+
+        <p class="text-light mb-3">
+          Your AI shopping companion. Spend smarter, spend less.
+        </p>
+
+        <div class="small text-light-50">
+          Location is optional (used only to estimate distance). Predictions are estimates; actual prices may vary.
+        </div>
+      </div>
+
+      <!-- Quick actions (ONLY index + dashboard) -->
+      <div class="col-md-4 pt-5">
+        <h2 class="h2 text-light border-bottom pb-3 border-light">Quick Actions</h2>
+        <ul class="list-unstyled text-light footer-link-list">
+          <li><a class="text-decoration-none text-light" href="index.html">Search Products</a></li>
+          <li><a class="text-decoration-none text-light" href="index.html#smartPicksRow">Smart Picks Near You</a></li>
+          <li><a class="text-decoration-none text-light" href="dashboard.html">Open Price Dashboard</a></li>
+          <li><a class="text-decoration-none text-light" href="index.html">Change Product Selection</a></li>
+        </ul>
+      </div>
+
+      <!-- Support -->
+      <div class="col-md-3 pt-5">
+        <h2 class="h2 text-light border-bottom pb-3 border-light">Support</h2>
+
+        <ul class="list-unstyled text-light footer-link-list">
+          <li>
+            <i class="fas fa-map-marker-alt fa-fw"></i>
+            Exchange 106, TRX.
+          </li>
+          <li>
+            <i class="fa fa-phone fa-fw"></i>
+            <a class="text-decoration-none text-light" href="tel:010-020-0340">010-020-0340</a>
+          </li>
+          <li>
+            <i class="fa fa-envelope fa-fw"></i>
+            <a class="text-decoration-none text-light" href="mailto:wasgud@company.com">wasgud@company.com</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="row text-light mb-4">
+      <div class="col-12 mb-3">
+        <div class="w-100 my-3 border-top border-light"></div>
+      </div>
+
+      <!-- Socials -->
+      <div class="col-auto me-auto">
+        <ul class="list-inline text-left footer-icons">
+          <li class="list-inline-item border border-light rounded-circle text-center">
+            <a class="text-light text-decoration-none" target="_blank" rel="noopener" href="http://facebook.com/">
+              <i class="fab fa-facebook-f fa-lg fa-fw"></i>
+            </a>
+          </li>
+          <li class="list-inline-item border border-light rounded-circle text-center">
+            <a class="text-light text-decoration-none" target="_blank" rel="noopener" href="https://www.instagram.com/">
+              <i class="fab fa-instagram fa-lg fa-fw"></i>
+            </a>
+          </li>
+          <li class="list-inline-item border border-light rounded-circle text-center">
+            <a class="text-light text-decoration-none" target="_blank" rel="noopener" href="https://twitter.com/">
+              <i class="fab fa-twitter fa-lg fa-fw"></i>
+            </a>
+          </li>
+          <li class="list-inline-item border border-light rounded-circle text-center">
+            <a class="text-light text-decoration-none" target="_blank" rel="noopener" href="https://www.linkedin.com/">
+              <i class="fab fa-linkedin fa-lg fa-fw"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Optional: keep it but relevant -->
+      <div class="col-auto">
+        <label class="sr-only" for="subscribeEmail">Email address</label>
+        <div class="input-group mb-2">
+          <input type="text" class="form-control bg-dark border-light text-light" id="subscribeEmail" placeholder="Get price drop alerts (email)">
+          <div class="input-group-text btn-success text-light">Notify Me</div>
+        </div>
+        <div class="small text-light-50">Optional: weekly alerts for tracked items.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-100 bg-black py-3">
+    <div class="container">
+      <div class="row pt-2">
+        <div class="col-12">
+          <p class="text-left text-light mb-0">
+            Copyright &copy; 2025 Wasgud
+            | Designed by Fattah
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- End Footer -->
+
+    <!-- Start Script -->
+    <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/templatemo.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <!-- End Script -->
+</body>
+</html>

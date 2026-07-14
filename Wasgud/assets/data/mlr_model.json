@@ -1,0 +1,61 @@
+{
+  "model_type": "linear_regression_onehot",
+  "target": "Price",
+  "features": {
+    "categorical": [
+      "Store",
+      "Brand",
+      "Category",
+      "Subcategory"
+    ],
+    "numeric": [
+      "Base Price"
+    ]
+  },
+  "intercept": -0.10058677834849306,
+  "coefficients": {
+    "Store_AEON Big Subang": -0.04333656927015463,
+    "Store_AEON Mid Valley": 0.05980858509868125,
+    "Store_Jaya 1 Utama": -0.04756275057754766,
+    "Store_Jaya Starling": 0.04688615023289983,
+    "Store_Jaya Sunway Geo": 0.05391478873160155,
+    "Store_Lotus Ampang": 0.05357442311978575,
+    "Store_Lotus Mutiara Damansara": -0.10070233539625417,
+    "Store_Lotus Selayang": 0.025651638598119298,
+    "Store_NSK Kuchai": 0.043660613000453735,
+    "Store_NSK Selayang": -0.09189454353758716,
+
+    "Brand_AEON": 0.016472015828528017,
+    "Brand_Jaya Grocer": 0.05323818838695374,
+    "Brand_Lotus": -0.02147627367834638,
+    "Brand_NSK": -0.04823393053713158,
+
+    "Category_Beverages": -0.018996203092066614,
+    "Category_Dairy": 0.029282946435938102,
+    "Category_General Grocery": -0.004572525770878888,
+    "Category_Household": -0.06601854736443746,
+    "Category_Pantry": 0.028948106775631612,
+    "Category_Personal Care": 0.0004962777312905582,
+    "Category_Snacks": 0.03085994528452286,
+
+    "Subcategory_Alcohol": -0.11908190915581955,
+    "Subcategory_Canned Food": 0.056585060355305444,
+    "Subcategory_Chips & Biscuits": 0.03085994528452286,
+    "Subcategory_Cleaning": -0.06601854736443746,
+    "Subcategory_Coffee & Malt": 0.00632037996973343,
+    "Subcategory_Condiments": 0.010526265405448298,
+    "Subcategory_Milk & Cultured": 0.029282946435938102,
+    "Subcategory_Others": -0.004572525770878888,
+    "Subcategory_Pasta & Noodles": 0.01060402783173394,
+    "Subcategory_Seasoning": -0.04876724681685495,
+    "Subcategory_Soft Drinks": 0.09376532609401649,
+    "Subcategory_Toiletries": 0.0004962777312905582,
+
+    "Base Price": 1.0071102746069418
+  },
+  "metrics": {
+    "r2_test": 0.9953789267017152,
+    "mae_test": 0.9664359343187654
+  },
+  "notes": "Trained offline using sklearn LinearRegression with OneHotEncoder(handle_unknown='ignore'). Intercept absorbs baseline. Coefficients follow exact key format used in datapoints.json."
+}

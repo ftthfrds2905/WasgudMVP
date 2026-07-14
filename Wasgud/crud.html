@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Wasgud | Client Item Manager (Manual CRUD)</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+  <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/templatemo.css">
+  <link rel="stylesheet" href="assets/css/custom.css">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+  <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+
+  <!-- Export to Excel (optional, but helpful) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <style>
+    .wasgud-admin-wrap { max-width: 1100px; margin: 0 auto; }
+    .table-wrap { overflow-x: auto; }
+    .muted { color: #6c757d; }
+    .modal-backdrop-lite {
+      display:none;
+      background:rgba(0,0,0,.6);
+      position:fixed; inset:0; z-index:1050;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Nav -->
+  <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+    <div class="container text-light">
+      <div class="w-100 d-flex justify-content-between">
+        <div>
+          <i class="fa fa-envelope mx-2"></i>
+          <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:wasgud@company.com">wasgud@company.com</a>
+          <i class="fa fa-phone mx-2"></i>
+          <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+        </div>
+        <div>
+          <a class="text-light" href="#" target="_blank" rel="noopener"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+          <a class="text-light" href="#" target="_blank" rel="noopener"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+          <a class="text-light" href="#" target="_blank" rel="noopener"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+          <a class="text-light" href="#" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <nav class="navbar navbar-expand-lg navbar-light shadow">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">Wasgud</a>
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="align-self-center collapse navbar-collapse flex-fill d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+        <div class="flex-fill">
+          <div class="wasgud-tagline-wrap mx-lg-auto text-center">
+            <div class="wasgud-tagline-main">Your AI shopping companion.</div>
+            <div class="wasgud-tagline-sub">Spend smarter, spend less.</div>
+          </div>
+        </div>
+
+        <div class="navbar align-self-center d-flex gap-2">
+          <a class="btn btn-outline-dark btn-sm" href="index.html">Search</a>
+          <a class="btn btn-outline-dark btn-sm" href="dashboard.html">Dashboard</a>
+          <a class="btn btn-success btn-sm" href="crud.html">Client Item Manager</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <section class="bg-light py-5">
+    <div class="container wasgud-admin-wrap">
+      <div class="row mb-3 text-center">
+        <div class="col-lg-9 m-auto">
+          <h1 class="h1">Client Item Manager (Manual CRUD)</h1>
+          <p class="text-muted mb-0">
+            Add items manually, edit or delete them, and keep the data stored in your browser for demonstration.
+          </p>
+        </div>
+      </div>
+
+      <!-- Manual Entry Form -->
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+            <div>
+              <h2 class="h5 mb-1">Add Item</h2>
+              <div class="small text-muted">
+                Data is saved automatically (localStorage). Export generates an Excel database file.
+              </div>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button id="btnExport" class="btn btn-dark btn-sm">
+                <i class="fa fa-download me-1"></i> Export Excel
+              </button>
+              <button id="btnClearAll" class="btn btn-outline-danger btn-sm">
+                Clear All
+              </button>
+            </div>
+          </div>
+
+          <form id="inlineForm" class="row g-3 mt-2">
+            <div class="col-md-2">
+              <label class="form-label">ID</label>
+              <div class="d-flex gap-2">
+                <input type="number" id="f_id" class="form-control" min="1" required>
+                <button type="button" class="btn btn-outline-secondary" id="btnNextId">Next</button>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Date</label>
+              <input type="date" id="f_date" class="form-control" required>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Product</label>
+              <input type="text" id="f_product" class="form-control" maxlength="120" required>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Store</label>
+              <input type="text" id="f_store" class="form-control" maxlength="120" required>
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Price (RM)</label>
+              <input type="number" id="f_price" class="form-control" step="0.01" min="0" required>
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label">Qty</label>
+              <input type="number" id="f_qty" class="form-control" min="1" required>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Booking Status</label>
+              <input type="text" id="f_status" class="form-control" maxlength="40" placeholder="Booked / Cancelled / Fulfilled" required>
+            </div>
+
+            <div class="col-md-4 d-flex align-items-end">
+              <button type="submit" class="btn btn-success w-100">
+                <i class="fa fa-plus me-1"></i> Add Item
+              </button>
+            </div>
+          </form>
+
+          <div class="small text-muted mt-2" id="statusLine"></div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="card shadow-sm border-0">
+        <div class="card-body table-wrap">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width:90px;">ID</th>
+                <th style="width:140px;">Date</th>
+                <th>Product</th>
+                <th>Store</th>
+                <th class="text-end" style="width:140px;">Price</th>
+                <th class="text-end" style="width:110px;">Qty</th>
+                <th style="width:180px;">Status</th>
+                <th style="width:170px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <tr><td colspan="8" class="text-muted text-center">No data yet. Add your first record above.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark" id="tempaltemo_footer">
+    <div class="w-100 bg-black py-3">
+      <div class="container">
+        <div class="row pt-2">
+          <div class="col-12">
+            <p class="text-left text-light mb-0">
+              Copyright &copy; 2025 Wasgud | Designed by Fattah
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Edit Modal -->
+  <div class="modal-backdrop-lite" id="editModal">
+    <div style="background:#fff; max-width:760px; margin:8vh auto; border-radius:12px; padding:18px;">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2 class="h5 m-0">Edit Item</h2>
+        <button class="btn btn-sm btn-outline-secondary" id="btnCloseModal">Close</button>
+      </div>
+
+      <form id="editForm" class="row g-3">
+        <input type="hidden" id="editIndex" value="-1">
+
+        <div class="col-md-2">
+          <label class="form-label">ID</label>
+          <input type="number" id="e_id" class="form-control" min="1" required>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Date</label>
+          <input type="date" id="e_date" class="form-control" required>
+        </div>
+
+        <div class="col-md-7">
+          <label class="form-label">Product</label>
+          <input type="text" id="e_product" class="form-control" maxlength="120" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Store</label>
+          <input type="text" id="e_store" class="form-control" maxlength="120" required>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Price (RM)</label>
+          <input type="number" id="e_price" class="form-control" step="0.01" min="0" required>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Qty</label>
+          <input type="number" id="e_qty" class="form-control" min="1" required>
+        </div>
+
+        <div class="col-md-12">
+          <label class="form-label">Booking Status</label>
+          <input type="text" id="e_status" class="form-control" maxlength="40" required>
+        </div>
+
+        <div class="col-12 d-flex gap-2">
+          <button type="submit" class="btn btn-success">Update</button>
+          <button type="button" class="btn btn-outline-secondary" id="btnCancelModal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/jquery-1.11.0.min.js"></script>
+  <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/templatemo.js"></script>
+
+  <script src="assets/js/excelCrud.js"></script>
+</body>
+</html>

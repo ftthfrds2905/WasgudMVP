@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Wasgud | Price Intelligence Dashboard</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
+  <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/templatemo.css">
+  <link rel="stylesheet" href="assets/css/custom.css">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+  <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+
+  <style>
+    /* Keeps Chart.js from stretching awkwardly */
+    .wasgud-chart-wrap { position: relative; height: 320px; }
+    .wasgud-chart-wrap canvas { width: 100% !important; height: 100% !important; display:block; }
+  </style>
+</head>
+
+<body>
+
+<!-- TOP NAV -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block">
+  <div class="container text-light">
+    <div class="w-100 d-flex justify-content-between">
+      <div>
+        <i class="fa fa-envelope mx-2"></i>
+        <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">wasgud@company.com</a>
+        <i class="fa fa-phone mx-2"></i>
+        <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+      </div>
+      <div>
+        <a class="text-light" href="#"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+        <a class="text-light" href="#"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+        <a class="text-light" href="#"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+        <a class="text-light" href="#"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<nav class="navbar navbar-expand-lg navbar-light shadow">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a class="navbar-brand text-success logo h1" href="index.html">Wasgud</a>
+
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="main_nav">
+      <div class="wasgud-tagline-wrap mx-lg-auto text-center">
+      <div class="wasgud-tagline-main">Your AI shopping companion.</div>
+      <div class="wasgud-tagline-sub">Spend smarter, spend less.</div>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- DASHBOARD -->
+<main id="dashboardRoot" class="bg-light py-5">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="row mb-4 align-items-center">
+      <div class="col-md-8">
+        <h1 class="h2 mb-1" id="dashProductName">Selected Product</h1>
+        <p class="text-muted mb-0">
+          Category: <span id="dashCategory">-</span> · Selected price: <span id="dashPrice">RM -</span>
+        </p>
+      </div>
+      <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <a href="index.html" class="btn btn-outline-success">
+          <i class="fa fa-arrow-left me-1"></i> Back to Search
+        </a>
+      </div>
+    </div>
+
+    <!-- Recommendation -->
+    <div class="alert alert-success mb-4" id="dashRecommendation">
+      Loading recommendation...
+    </div>
+
+    <!-- Filters -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <label class="form-label">Maximum Distance (km)</label>
+        <input type="range" class="form-range" id="filterDistance" min="1" max="30" value="30">
+        <div class="small text-muted">
+          Showing stores within <span id="filterDistanceValue">30</span> km
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Filter by Store Brand</label>
+        <select id="filterStore" class="form-select" multiple></select>
+        <div class="small text-muted">Hold Ctrl / Cmd to select multiple stores</div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-body">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+      <div>
+        <h5 class="mb-0">Actual vs Predicted Price (Multiple Linear Regression)</h5>
+        <div class="small text-muted mt-1" id="mlrStatus"></div>
+      </div>
+
+      <!-- Metrics badges -->
+      <div class="d-flex flex-wrap gap-2">
+        <span class="badge bg-dark" id="mlrR2">R²: -</span>
+        <span class="badge bg-dark" id="mlrMAE">MAE: -</span>
+      </div>
+    </div>
+
+    <p class="small text-muted mb-3">
+      Predicted prices are generated using a trained Multiple Linear Regression model
+      (Store, Brand, Category, Subcategory, Base Price).
+    </p>
+
+    <!-- Chart.js needs a sized wrapper -->
+    <div class="wasgud-chart-wrap" style="height: 340px;">
+      <canvas id="priceChart"></canvas>
+    </div>
+  </div>
+</div>
+
+    <!-- Map + Table -->
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="mb-3">Recommended Store Location</h5>
+            <div id="dashMap" style="width:100%; height:420px; border-radius:12px; background:#e9ecef;"></div>
+            <p id="dashMapStatus" class="small text-muted mt-2 mb-0"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="mb-3">Store Price Comparison</h5>
+            <div class="table-responsive" style="max-height:420px; overflow-y:auto;">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Store</th>
+                    <th class="text-end">Actual</th>
+                    <th class="text-end">Predicted</th>
+                    <th class="text-end">KM</th>
+                    <th>Map</th>
+                  </tr>
+                </thead>
+                <tbody id="dashStoresBody">
+                  <tr>
+                    <td colspan="5" class="text-muted text-center">Loading store options...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small text-muted mt-2 mb-0">
+              Recommendation logic: predicted → actual → distance → availability
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-dark py-3">
+  <div class="container">
+    <p class="text-light mb-0">© 2025 Wasgud · Price Intelligence Platform</p>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="assets/js/jquery-1.11.0.min.js"></script>
+<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/templatemo.js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Your logic -->
+<script src="assets/js/custom.js"></script>
+</body>
+</html>
