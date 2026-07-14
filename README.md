@@ -141,21 +141,40 @@ This project demonstrates experience in:
 ## 📸 Screenshots
 
 ### Product Search
-
-![Product Search](assets/images/Product-Locator.png)
 ---
 
-### Price Comparison
-![Comparison](assets/images/ML%20model.png)
+## 📸 Screenshots
+
+### 🔍 Product Search
+
+Search for grocery products across multiple supermarkets.
+
+![Product Search](assets/assets/images/Product-Locator.png)
+
 ---
 
-### Recomnmended Stores
+### 💰 Price Comparison
 
-![Recommended Stores](assets/images/Recommended%20Stores.png)
+Compare prices between retailers to find the best available deal.
 
-### Smart Picks
+![Price Comparison](assets/assets/images/ml-model.png)
 
-![Smart Picks](assets/images/SmartPicks.png)
+---
+
+### 📍 Recommended Stores
+
+Discover nearby supermarkets offering your selected product.
+
+![Recommended Stores](assets/assets/images/recommended-stores.png)
+
+---
+
+### ⭐ Smart Picks
+
+Receive product recommendations based on price and value.
+
+![Smart Picks](assets/assets/images/SmartPicks.png)
+
 ---
 
 ## 🚀 Future Improvements (WasGud 2.0)
@@ -195,7 +214,7 @@ Sunway University
 
 GitHub: https://github.com/fattah2905
 
-LinkedIn: *(Add your LinkedIn profile)*
+
 
 ---
 
@@ -204,15 +223,3 @@ LinkedIn: *(Add your LinkedIn profile)*
 This project is intended for educational and portfolio purposes.
 
 ```
-
-### A few improvements that would make this stand out to employers
-
-Before you upload it, I'd suggest adding:
-
-- **A "Live Demo" section** (if the Netlify deployment is still available).
-- **Installation instructions** (`git clone`, required packages, how to run the scraper, etc.).
-- **Screenshots or a GIF** of the application in action—many recruiters decide within seconds whether to explore a repository further.
-- **Project structure** showing the folder layout (e.g., `frontend/`, `scraper/`, `data/`, `docs/`).
-- **Known limitations**, such as using an Excel file as a prototype database and focusing on selected Malaysian retailers.
-
-These additions make the repository look more like a professional software project rather than just a university assignment.
